@@ -3,6 +3,7 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Random;
 
 
 public class Janken {
@@ -41,9 +42,15 @@ public class Janken {
         System.out.println(hands.get(playHand));
     }
 
+    public String cpuHand() {
+        Random random = new Random();
+        int randomNumber = random.nextInt(3) + 1; //1~3までのランダムな数字を出力
+        return hands.get(randomNumber);
+    }
 
 
     public void execution() {
         playGame();
+        System.out.println(cpuHand());
     }
 }
