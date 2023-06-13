@@ -5,14 +5,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Random;
 
-
 public class Janken {
 
     private Map<Integer, String> hands = new HashMap<Integer, String>();
 
     private List<String> results = new ArrayList<String>();
-
-
 
     public Janken() {
         hands.put(1, "グー");
@@ -39,18 +36,36 @@ public class Janken {
         } while (true);
 
         scanner.close();
-        System.out.println(hands.get(playHand));
+
+        String Hand = hands.get(playHand); // プレイヤーの手
+        int cpuHandNumber = cpuHand(); // 1~3までのランダムな数字を取得
+        String cpuHand = hands.get(cpuHandNumber); // CPU側のグーチョキパーを取得する
+        String judge = judge(playHand, cpuHandNumber); // 勝敗判定
+
+        System.out.println("Player : " + Hand); // Player : グー
+        System.out.println("CPU : " + cpuHand);// CPU   : パー
+        System.out.println("Result : " + judge);
+
     }
 
-    public String cpuHand() {
+    public int cpuHand() {
         Random random = new Random();
-        int randomNumber = random.nextInt(3) + 1; //1~3までのランダムな数字を出力
-        return hands.get(randomNumber);
+        int randomNumber = random.nextInt(3) + 1; // 1~3までのランダムな数字を出力
+        return randomNumber;
     }
 
+    public String judge(int player, int cpu) {
+        if (player == cpu) {
+            return results.get(0); // あいこ
+        } else if ((player == 1 && cpu == 2) || (player == 2 && cpu == 3) || (player == 3 && cpu == 1)) {
+            return results.get(2); // 勝ち
+        } else {
+            return results.get(1); // 負け
+        }
+    }
 
     public void execution() {
         playGame();
-        System.out.println(cpuHand());
+
     }
 }
