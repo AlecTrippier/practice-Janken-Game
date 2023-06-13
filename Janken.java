@@ -11,6 +11,12 @@ public class Janken {
 
     private List<String> results = new ArrayList<String>();
 
+    int winCount = 0;
+    int loseCount = 0;
+    int draw = 0;
+
+    private Scanner scanner; // Scannerインスタンス
+
     public Janken() {
         hands.put(1, "グー");
         hands.put(2, "チョキ");
@@ -19,10 +25,11 @@ public class Janken {
         results.add("あいこ");
         results.add("負け");
         results.add("勝ち");
+
+        scanner = new Scanner(System.in); // Scannerインスタンスの作成
     }
 
     public void playGame() {
-        Scanner scanner = new Scanner(System.in);
         int playHand;
         String input;
         do {
@@ -35,8 +42,6 @@ public class Janken {
             System.out.println("該当する半角数字で入力してください");
         } while (true);
 
-        scanner.close();
-
         String Hand = hands.get(playHand); // プレイヤーの手
         int cpuHandNumber = cpuHand(); // 1~3までのランダムな数字を取得
         String cpuHand = hands.get(cpuHandNumber); // CPU側のグーチョキパーを取得する
@@ -46,6 +51,9 @@ public class Janken {
         System.out.println("CPU : " + cpuHand);// CPU   : パー
         System.out.println("Result : " + judge);
 
+        resultCount(judge); // カウント増減の処理を追加
+
+        continueGame();
     }
 
     public int cpuHand() {
@@ -64,8 +72,47 @@ public class Janken {
         }
     }
 
+    public void resultCount(String judge) {
+        switch(judge) {
+            case "勝ち":
+                winCount += 1;
+                break;
+            case "負け":
+                loseCount += 1;
+                break;
+            case "あいこ":
+                draw += 1;
+                break;
+        }
+    }
+
+    public void continueGame() {
+        String input;
+        int number;
+
+        do {
+            System.out.println("1:もう一度対戦する 2:終了する");
+            input = scanner.next();
+            if (input.matches("[1-2]")) {
+                number = Integer.parseInt(input);
+                break;
+            }
+            System.out.println("該当する半角数字で入力してください");
+        } while (true);
+
+        if (number == 1) {
+            playGame();
+        } else {
+            System.out.println("最終結果：" + winCount + "勝 " + loseCount + "敗 " + draw + "引き分け");
+        }
+    }
+
     public void execution() {
         playGame();
+    }
 
+    public static void main(String[] args) {
+        Janken janken = new Janken();
+        janken.execution();
     }
 }
