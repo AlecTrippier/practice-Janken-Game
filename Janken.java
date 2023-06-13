@@ -23,7 +23,7 @@ public class Janken {
         results.add("勝ち");
     }
 
-    public int playGame() {
+    public void playGame() {
 
         Scanner scanner = new Scanner(System.in);
         int playHand;
@@ -37,17 +37,19 @@ public class Janken {
                 // 入力が整数の場合の処理
                 if(playHand >= 1 && playHand <= 3){
                     break;
+                } else {
+                    scanner.next(); // 数字以外のトークンを読み飛ばす
                 }
             }
             System.out.println("該当する半角数字で入力してください");
         } while (true);
 
         scanner.close();
-        System.out.println(playHand);
+        System.out.println(hands.get(playHand));
     }
 
 
     public void execution() {
-
+        playGame();
     }
 }
