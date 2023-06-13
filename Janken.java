@@ -24,22 +24,15 @@ public class Janken {
     }
 
     public void playGame() {
-
         Scanner scanner = new Scanner(System.in);
         int playHand;
-        do{
-            // 1:グー 2:チョキ 3:パー
+        String input;
+        do {
             System.out.println("1:グー 2:チョキ 3:パー");
-            // 整数値の入力を受け付ける
-            //hasNextIntで判定、nextIntは入力値の代入
-            if (scanner.hasNextInt()) {
-                playHand = scanner.nextInt();
-                // 入力が整数の場合の処理
-                if(playHand >= 1 && playHand <= 3){
-                    break;
-                } else {
-                    scanner.next(); // 数字以外のトークンを読み飛ばす
-                }
+            input = scanner.next();
+            if (input.matches("[1-3]")) {
+                playHand = Integer.parseInt(input);
+                break;
             }
             System.out.println("該当する半角数字で入力してください");
         } while (true);
@@ -47,6 +40,7 @@ public class Janken {
         scanner.close();
         System.out.println(hands.get(playHand));
     }
+
 
 
     public void execution() {
